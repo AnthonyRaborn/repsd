@@ -1,6 +1,4 @@
-
-
-#' resdp
+#' repsd
 #'
 #' @param focalSample numeric - How large is the focal sample in the data set?
 #' @param focalProp numeric, between 0 and 1 (exclusive). What is the proportion
@@ -12,7 +10,7 @@
 #' @param focalGroupID numeric or character - The value that identifies the focal
 #' group.
 #'
-#' @return Matrix of resdg values for each item.
+#' @return Matrix of repsd values for each item.
 #' @export
 #'
 repsd <-
@@ -22,7 +20,7 @@ repsd <-
            focalColumn = 21,
            focalGroupID = 1) {
     ###############################################
-    ############ calculating resdg ################
+    ############ calculating repsd ################
     ###############################################
 
     # creating strata
@@ -30,9 +28,9 @@ repsd <-
       subset(responses,
              responses[, focalColumn] == focalGroupID)
     ttscore_foc <-
-      rowSums(itemresp_foc[, -focalGroupID])  # I am cutting the strata based on total score of focal group only!
+      rowSums(itemresp_foc[,-focalGroupID])  # I am cutting the strata based on total score of focal group only!
     ttscore <-
-      rowSums(responses[, -focalGroupID])
+      rowSums(responses[,-focalGroupID])
 
     breaks_foc <-
       seq(min(ttscore_foc),
@@ -122,7 +120,7 @@ repsd <-
 
     # calculating resd for each item
 
-    resdg_each_item <- c()
+    repsd_each_item <- c()
 
     for (column in 1:20) {
       brackets <- c()
@@ -156,11 +154,11 @@ repsd <-
         }
       }
 
-      resdg <- sqrt(sum(brackets))
+      repsd <- sqrt(sum(brackets))
 
-      resdg_each_item <- c(resdg_each_item, resdg)
+      repsd_each_item <- c(repsd_each_item, repsd)
     }
-    resdg_each_item
+    repsd_each_item
 
   }
 globalVariables('timmsData')
