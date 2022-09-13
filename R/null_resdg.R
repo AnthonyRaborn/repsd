@@ -30,7 +30,7 @@ null_resdg <- function(
                     1.003,.652,1.637,1.268,1.218,1.32,2.049,.791,1.448,.35),
   item_params_b = c(.398,2.22,-.078,-.984,1.341,.006,-.831,-.118,-1.838,-2.227,1.051,
                     .233,.971,-.795,-.143,-.213,1.106,1.007,.6,2.405),
-  iterations = 100
+  iterations = 10000
 ) {
   null_resdg_est <- c()
   pb <- progress::progress_bar$new(total = iterations)
