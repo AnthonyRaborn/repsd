@@ -92,7 +92,7 @@ repsd <-
     total_focal_removed <-
       sum(flags)  # number of focal persons removed
     new_focal_ss <-
-      focalSample - total_focal_removed  # sample size to use in resd
+      focalSample - total_focal_removed  # sample size to use in repsd
 
     ### handling cases of low N for non-focal group within strata
 
@@ -158,7 +158,13 @@ repsd <-
 
       repsd_each_item <- c(repsd_each_item, repsd)
     }
-    repsd_each_item
+    return(
+      list('repsd_each_item' = repsd_each_item,
+           'total_focal_removed' = total_focal_removed,
+           'total_non_focal_removed' = total_non_focal_removed,
+           'num_removed_over_foc_max' = total_focal_removed
+      )
+    )
 
   }
 globalVariables('timmsData')
