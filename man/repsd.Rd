@@ -6,7 +6,7 @@
 \usage{
 repsd(
   focalSample = 88,
-  focalProp = 0.9,
+  focalProp = 0.09,
   responses = timmsData,
   focalColumn = 21,
   focalGroupID = 1
@@ -18,7 +18,8 @@ repsd(
 \item{focalProp}{numeric, between 0 and 1 (exclusive). What is the proportion
 of the focal sample compared to the rest of the data?}
 
-\item{responses}{data.frame, matrix, or similar object - Includes the item
+\item{responses}{data.frame, matrix, or
+other object which includes the item
 responses and the focal group ID column.}
 
 \item{focalColumn}{numeric or character - The location or name of the column
