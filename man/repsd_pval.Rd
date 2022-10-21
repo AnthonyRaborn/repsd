@@ -7,7 +7,9 @@
 repsd_pval(
   alpha = 0.05,
   null_dist = null_repsd(),
-  repsd_each_item = repsd()$repsd_each_item
+  repsd_each_item = repsd()$repsd_each_item,
+  responses = timmsData,
+  focalColumn = 21
 )
 }
 \arguments{

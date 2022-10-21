@@ -20,16 +20,18 @@ repsd_pval <-
   function(
     alpha = .05,
     null_dist = null_repsd(),
-    repsd_each_item = repsd()$repsd_each_item
+    repsd_each_item = repsd()$repsd_each_item,
+    responses = timmsData,
+    focalColumn = 21
     ) {
 
     # p value and sig for each item
     p_for_each_item  <- c()
     sig_for_each_item <- c()
 
-    for (column in 1:ncol(null)) {
+    for (column in 1:ncol(null_dist)) {
       null_for_item <-
-        null[, column] |> unlist()
+        null_dist[, column] |> unlist()
       null_values <-
         subset(null_for_item, null_for_item >= repsd_each_item[column]) |> unlist()
       p <-
