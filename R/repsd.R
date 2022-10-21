@@ -76,8 +76,8 @@ repsd <-
       c()  # figuring out number of focal in each strata
 
     for (s in c(1:4)) {
-      sub_data <- subset(itemresp, itemresp[, 22] == s)
-      sub_data_foc <- subset(sub_data, sub_data[, 21] == 1)
+      sub_data <- subset(itemresp, itemresp[, 'stratum_group'] == s) # DON'T HARDCODE THE STRATA COLUMN!
+      sub_data_foc <- subset(sub_data, sub_data[, focalColumn] == focalGroupID)
       focal_N_in_strata <-
         c(focal_N_in_strata, length(sub_data_foc[, 1]))
 
@@ -101,8 +101,8 @@ repsd <-
       c()  # figuring out number of nonfocal in each strata
 
     for (s in c(1:4)) {
-      sub_data <- subset(itemresp, itemresp[, 22] == s)
-      sub_data_nonfoc <- subset(sub_data, sub_data[, 21] == 0)
+      sub_data <- subset(itemresp, itemresp[, 'stratum_group'] == s)
+      sub_data_nonfoc <- subset(sub_data, sub_data[, focalColumn] != focalGroupID)
       non_focal_N_in_strata <-
         c(non_focal_N_in_strata, length(sub_data_nonfoc[, 1]))
 
@@ -127,9 +127,9 @@ repsd <-
       brackets <- c()
 
       for (s in 1:4) {
-        sub_data <- subset(itemresp, itemresp[, 22] == s)
-        sub_data_foc <- subset(sub_data, sub_data[, 21] == 1)
-        sub_data_non_foc <- subset(sub_data, sub_data[, 21] == 0)
+        sub_data <- subset(itemresp, itemresp[, 'stratum_group'] == s)
+        sub_data_foc <- subset(sub_data, sub_data[, focalColumn] == focalGroupID)
+        sub_data_non_foc <- subset(sub_data, sub_data[, focalColumn] != focalGroupID)
 
         if (length(sub_data_foc[, 1] < 10)) {
           # ignoring strata with less than 10 focal examinees
