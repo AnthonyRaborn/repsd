@@ -1,5 +1,5 @@
 ^LICENSE\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-sim\*
-applied\*
+sim
+applied
