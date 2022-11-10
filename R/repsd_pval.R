@@ -10,12 +10,11 @@
 #' @param alpha The alpha level to calculate significance.
 #' @param null_dist A `data.frame`-type object with the null distribution simulation for each item as columns.
 #' @param repsd_each_item A vector of the repsd values for each item.
-#' @param responses
+#' @param responses The data frame of item responses and the focal column.
+#' @param focalColumn THe column number for the focal column. Removed from the final data.
 #'
 #' @return If the `colorDF` package is installed and accessible, a `colorDF` with the significant items highlighted. Otherwise, a `data.frame`. Both have columns with the `items` names, the `repsd` value, the `p.value`, and the `sig` (0 = false, 1 = true) for each item.
 #' @export
-#'
-#' @examples
 #'
 repsd_pval <-
   function(
@@ -57,7 +56,9 @@ repsd_pval <-
         colorDF::colorDF(theme = 'wb') |>
         colorDF::highlight('sig' == 1)
     } else {
-      results
+      results |>
+        print()
     }
 
+    return(invisible(results))
   }

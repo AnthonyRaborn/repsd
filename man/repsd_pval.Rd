@@ -18,6 +18,10 @@ repsd_pval(
 \item{null_dist}{A \code{data.frame}-type object with the null distribution simulation for each item as columns.}
 
 \item{repsd_each_item}{A vector of the repsd values for each item.}
+
+\item{responses}{The data frame of item responses and the focal column.}
+
+\item{focalColumn}{THe column number for the focal column. Removed from the final data.}
 }
 \value{
 If the \code{colorDF} package is installed and accessible, a \code{colorDF} with the significant items highlighted. Otherwise, a \code{data.frame}. Both have columns with the \code{items} names, the \code{repsd} value, the \code{p.value}, and the \code{sig} (0 = false, 1 = true) for each item.
@@ -32,8 +36,4 @@ the \code{null_repsd} function and the \code{repsd_each_item}
 output of the \code{repsd} function (each with proper
 arguments) as the arguments to \code{null_dist} and
 \code{repsd_each_item}, respectively.
-}
-\examples{
-None.
-
 }
