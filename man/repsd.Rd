@@ -9,7 +9,8 @@ repsd(
   focalProp = 0.09,
   responses = timmsData,
   focalColumn = 21,
-  focalGroupID = 1
+  focalGroupID = 1,
+  matching = 4
 )
 }
 \arguments{
@@ -27,6 +28,8 @@ that holds the focal group data.}
 
 \item{focalGroupID}{numeric or character - The value that identifies the focal
 group.}
+
+\item{matching}{numeric. How many stratum for matching should be use}
 }
 \value{
 Matrix of repsd values for each item.

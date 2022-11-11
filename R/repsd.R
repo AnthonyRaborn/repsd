@@ -10,6 +10,7 @@
 #' that holds the focal group data.
 #' @param focalGroupID numeric or character - The value that identifies the focal
 #' group.
+#' @param matching numeric. How many stratum for matching should be use
 #'
 #' @return Matrix of repsd values for each item.
 #' @export
@@ -19,7 +20,8 @@ repsd <-
            focalProp = .09,
            responses = timmsData,
            focalColumn = 21,
-           focalGroupID = 1) {
+           focalGroupID = 1,
+           matching = 4) {
     ###############################################
     ############ calculating repsd ################
     ###############################################
@@ -36,7 +38,7 @@ repsd <-
     breaks_foc <-
       seq(min(ttscore_foc),
           max(ttscore_foc),
-          length.out = 5)
+          length.out = matching+1)
     stratum_group <-
       cut(
         ttscore,
@@ -75,7 +77,7 @@ repsd <-
     focal_N_in_strata <-
       c()  # figuring out number of focal in each strata
 
-    for (s in c(1:4)) {
+    for (s in c(1:matching)) {
       sub_data <- subset(itemresp, itemresp[, 'stratum_group'] == s) # DON'T HARDCODE THE STRATA COLUMN!
       sub_data_foc <- subset(sub_data, sub_data[, focalColumn] == focalGroupID)
       focal_N_in_strata <-
@@ -85,7 +87,7 @@ repsd <-
 
     flags <-
       c()  # flagging strata with less than 10 focal group members
-    for (z in 1:4) {
+    for (z in 1:matching) {
       flag <- ifelse(focal_N_in_strata[z] < 10, focal_N_in_strata[z], 0)
       flags <- c(flags, flag)
     }
@@ -100,7 +102,7 @@ repsd <-
     non_focal_N_in_strata <-
       c()  # figuring out number of nonfocal in each strata
 
-    for (s in c(1:4)) {
+    for (s in c(1:matching)) {
       sub_data <- subset(itemresp, itemresp[, 'stratum_group'] == s)
       sub_data_nonfoc <- subset(sub_data, sub_data[, focalColumn] != focalGroupID)
       non_focal_N_in_strata <-
@@ -110,7 +112,7 @@ repsd <-
 
     flags <-
       c()  # flagging strata with less than 10 nonfocal group members
-    for (z in 1:4) {
+    for (z in 1:matching) {
       flag <-
         ifelse(non_focal_N_in_strata[z] < 10, non_focal_N_in_strata[z], 0)
       flags <- c(flags, flag)
@@ -126,7 +128,7 @@ repsd <-
     for (column in 1:(ncol(responses) - 1)) {
       brackets <- c()
 
-      for (s in 1:4) {
+      for (s in 1:matching) {
         sub_data <- subset(itemresp, itemresp[, 'stratum_group'] == s)
         sub_data_foc <- subset(sub_data, sub_data[, focalColumn] == focalGroupID)
         sub_data_non_foc <- subset(sub_data, sub_data[, focalColumn] != focalGroupID)
