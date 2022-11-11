@@ -123,7 +123,7 @@ repsd <-
 
     repsd_each_item <- c()
 
-    for (column in 1:20) {
+    for (column in 1:(ncol(responses) - 1)) {
       brackets <- c()
 
       for (s in 1:4) {
