@@ -4,15 +4,17 @@
 #' @param focal_sample numeric - How large is the focal sample?
 #' @param focal_prop numeric, between 0 and 1 (exclusive). What is the proportion
 #' of the focal sample compared to the rest of the data?
-#' @param impact numeric - What is the expected effect size between focal group
-#' and the rest of the population?
+#' @param impact numeric - What is the expected, standardized mean difference
+#' between the focal group's mean theta and the composite group's mean theta
+#' (i.e., standardized focal mean - composite mean). See details for further explanation.
 #' @param item_params_a numeric vector - What are the discrimination parameters
 #' of the items in the data set?
 #' @param item_params_b numeric vector - What are the difficulty parameters of
 #' the items in the data set?
 #' @param iterations numeric - How many iterations for the function to run?
 #'
-#' @return A data.frame with repsd values for each item
+#' @return An `item_count` x `iterations` data.frame with simulated repsd values
+#'  for each item.
 #' @export
 #'
 #' @importFrom stats rnorm runif
@@ -79,7 +81,8 @@ null_repsd <- function(item_count = 20,
     nonfocss <-
       (focal_sample / focal_prop) - focal_sample #see how formula was obtained in scanned notes in pub folder
     nonfocmean <-
-      ((impact + 1) - (impact * focal_prop)) / (1 - focal_prop) #see how formula was obtained in scanned notes in pub folder
+      # ((impact + 1) - (impact * focal_prop)) / (1 - focal_prop) #see how formula was obtained in scanned notes in pub folder
+      -(impact*focal_prop) / (1 - focal_prop)
     thetanonfoc <- stats::rnorm(nonfocss, nonfocmean, 1)
     theta <- c(thetafoc, thetanonfoc)
     thetaframe <- data.frame("theta" = theta,

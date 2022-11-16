@@ -24,8 +24,9 @@ null_repsd(
 \item{focal_prop}{numeric, between 0 and 1 (exclusive). What is the proportion
 of the focal sample compared to the rest of the data?}
 
-\item{impact}{numeric - What is the expected effect size between focal group
-and the rest of the population?}
+\item{impact}{numeric - What is the expected, standardized mean difference
+between the focal group's mean theta and the composite group's mean theta
+(i.e., standardized focal mean - composite mean). See details for further explanation.}
 
 \item{item_params_a}{numeric vector - What are the discrimination parameters
 of the items in the data set?}
@@ -36,7 +37,8 @@ the items in the data set?}
 \item{iterations}{numeric - How many iterations for the function to run?}
 }
 \value{
-A data.frame with repsd values for each item
+An \code{item_count} x \code{iterations} data.frame with simulated repsd values
+for each item.
 }
 \description{
 null_repsd
