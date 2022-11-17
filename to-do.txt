@@ -1,0 +1,3 @@
+IMPACT:
+perhaps look into calculating Cohen's D between focal and composite(everyone) group total scores,
+either using SUM SCOREs or THETAs
