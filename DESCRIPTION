@@ -2,11 +2,11 @@ Package: repsd
 Title: Root Expected Proportion Squared Difference for Detecting DIF
 Version: 0.0.0.9000
 Authors@R: c(
+  person(given = c("Anne", "Corrine"), family = "Huggins-Manley",
+    email = "amanley@coe.ufl.edu", role = c("aut")),
   person(given = c("Anthony", "William"), family = "Raborn",
     email = "anthony.w.raborn@gmail.com", role = c("aut", "cre"),
-     comment = c(ORCID = "0000-0002-8083-4739")),
-  person(given = c("Anne", "Corrine"), family = "Huggins-Manley",
-    email = "amanley@coe.ufl.edu", role = c("aut"))
+    comment = c(ORCID = "0000-0002-8083-4739"))
   )
 Description: REPSD is a nonparametric DIF method that (a) allows practitioners 
   to explore for DIF related to small, fine-grained focal groups of examinees, 
