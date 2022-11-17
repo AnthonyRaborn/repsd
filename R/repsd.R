@@ -1,20 +1,20 @@
 #' repsd
 #'
-#' @param focalSample numeric - How large is the focal sample in the data set?
+#' @param focalSample numeric. How large is the focal sample in the data set?
 #' @param focalProp numeric, between 0 and 1 (exclusive). What is the proportion
 #' of the focal sample compared to the rest of the data?
 #' @param responses data.frame, matrix, or
 #' other object which includes the item
 #' responses and the focal group ID column.
-#' @param focalColumn numeric or character - The location or name of the column
+#' @param focalColumn numeric or character. The location or name of the column
 #' that holds the focal group data.
-#' @param focalGroupID numeric or character - The value that identifies the focal
+#' @param focalGroupID numeric or character. The value that identifies the focal
 #' group.
 #' @param matching numeric. How many stratum for matching should be use
 #'
 #' @return Matrix of repsd values for each item.
 #' @export
-#'
+
 repsd <-
   function(focalSample = 88,
            focalProp = .09,
@@ -171,3 +171,5 @@ repsd <-
 
   }
 globalVariables('timmsData')
+globalVariables('timmsDiscrim')
+globalVariables('timmsDiffic')
