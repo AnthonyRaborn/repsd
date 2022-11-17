@@ -9,32 +9,30 @@ null_repsd(
   focal_sample = 88,
   focal_prop = 0.09,
   impact = -0.417,
-  item_params_a = c(1.188, 0.528, 1.065, 1.294, 0.721, 1.129, 0.339, 1.685, 0.861, 1.08,
-    1.003, 0.652, 1.637, 1.268, 1.218, 1.32, 2.049, 0.791, 1.448, 0.35),
-  item_params_b = c(0.398, 2.22, -0.078, -0.984, 1.341, 0.006, -0.831, -0.118, -1.838,
-    -2.227, 1.051, 0.233, 0.971, -0.795, -0.143, -0.213, 1.106, 1.007, 0.6, 2.405),
+  item_params_a = timmsDiscrim,
+  item_params_b = timmsDiffic,
   iterations = 10000
 )
 }
 \arguments{
-\item{item_count}{numeric - How many items?}
+\item{item_count}{numeric. How many items?}
 
-\item{focal_sample}{numeric - How large is the focal sample?}
+\item{focal_sample}{numeric. How large is the focal sample?}
 
 \item{focal_prop}{numeric, between 0 and 1 (exclusive). What is the proportion
 of the focal sample compared to the rest of the data?}
 
-\item{impact}{numeric - What is the expected, standardized mean difference
+\item{impact}{numeric. What is the expected, standardized mean difference
 between the focal group's mean theta and the composite group's mean theta
 (i.e., standardized focal mean - composite mean). See details for further explanation.}
 
-\item{item_params_a}{numeric vector - What are the discrimination parameters
+\item{item_params_a}{numeric vector. What are the discrimination parameters
 of the items in the data set?}
 
-\item{item_params_b}{numeric vector - What are the difficulty parameters of
+\item{item_params_b}{numeric vector. What are the difficulty parameters of
 the items in the data set?}
 
-\item{iterations}{numeric - How many iterations for the function to run?}
+\item{iterations}{numeric. How many iterations for the function to run?}
 }
 \value{
 An \code{item_count} x \code{iterations} data.frame with simulated repsd values

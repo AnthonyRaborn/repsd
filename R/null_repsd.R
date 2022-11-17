@@ -1,17 +1,17 @@
 #' null_repsd
 #'
-#' @param item_count numeric - How many items?
-#' @param focal_sample numeric - How large is the focal sample?
+#' @param item_count numeric. How many items?
+#' @param focal_sample numeric. How large is the focal sample?
 #' @param focal_prop numeric, between 0 and 1 (exclusive). What is the proportion
 #' of the focal sample compared to the rest of the data?
-#' @param impact numeric - What is the expected, standardized mean difference
+#' @param impact numeric. What is the expected, standardized mean difference
 #' between the focal group's mean theta and the composite group's mean theta
 #' (i.e., standardized focal mean - composite mean). See details for further explanation.
-#' @param item_params_a numeric vector - What are the discrimination parameters
+#' @param item_params_a numeric vector. What are the discrimination parameters
 #' of the items in the data set?
-#' @param item_params_b numeric vector - What are the difficulty parameters of
+#' @param item_params_b numeric vector. What are the difficulty parameters of
 #' the items in the data set?
-#' @param iterations numeric - How many iterations for the function to run?
+#' @param iterations numeric. How many iterations for the function to run?
 #'
 #' @return An `item_count` x `iterations` data.frame with simulated repsd values
 #'  for each item.
@@ -25,50 +25,8 @@ null_repsd <- function(item_count = 20,
                        focal_sample = 88,
                        focal_prop = .09,
                        impact = -.417,
-                       item_params_a = c(
-                         1.188,
-                         .528,
-                         1.065,
-                         1.294,
-                         0.721,
-                         1.129,
-                         .339,
-                         1.685,
-                         .861,
-                         1.08,
-                         1.003,
-                         .652,
-                         1.637,
-                         1.268,
-                         1.218,
-                         1.32,
-                         2.049,
-                         .791,
-                         1.448,
-                         .35
-                       ),
-                       item_params_b = c(
-                         .398,
-                         2.22,
-                         -.078,
-                         -.984,
-                         1.341,
-                         .006,
-                         -.831,
-                         -.118,
-                         -1.838,
-                         -2.227,
-                         1.051,
-                         .233,
-                         .971,
-                         -.795,
-                         -.143,
-                         -.213,
-                         1.106,
-                         1.007,
-                         .6,
-                         2.405
-                       ),
+                       item_params_a = timmsDiscrim,
+                       item_params_b = timmsDiffic,
                        iterations = 10000) {
   null_repsd_est <- c()
   pb <- progress::progress_bar$new(total = iterations)

@@ -2,25 +2,28 @@
 #'
 #' @details Calculates the p-values for `repsd` for the data set.
 #' It can be used as a wrapper function by providing
-#' the `null_repsd` function and the `repsd_each_item`
-#' output of the `repsd` function (each with proper
+#' the [null_repsd()] function and the `repsd_each_item`
+#' output of the [repsd()] function (each with proper
 #' arguments) as the arguments to `null_dist` and
-#' `repsd_each_item`, respectively.
+#' `items_repsd`, respectively.
 #'
-#' @param alpha The alpha level to calculate significance.
+#' @param alpha numeric. The alpha level to calculate significance.
 #' @param null_dist A `data.frame`-type object with the null distribution simulation for each item as columns.
-#' @param repsd_each_item A vector of the repsd values for each item.
-#' @param responses The data frame of item responses and the focal column.
-#' @param focalColumn THe column number for the focal column. Removed from the final data.
+#' @param items_repsd A numeric vector of the repsd values for each item.
+#' @param responses The `data.frame` of item responses and the focal column.
+#' @param focalColumn The column number for the focal column. Removed from the final data.
 #'
-#' @return If the `colorDF` package is installed and accessible, a `colorDF` with the significant items highlighted. Otherwise, a `data.frame`. Both have columns with the `items` names, the `repsd` value, the `p.value`, and the `sig` (0 = false, 1 = true) for each item.
+#' @return If the `colorDF` package is installed and accessible, a `colorDF`
+#' with the significant items highlighted. Otherwise, a `data.frame`. Both have
+#' columns with the `items` names, the `repsd` value, the `p.value`, and the
+#' `sig` (0 = false, 1 = true) for each item.
 #' @export
-#'
+
 repsd_pval <-
   function(
     alpha = .05,
     null_dist = null_repsd(),
-    repsd_each_item = repsd()$repsd_each_item,
+    items_repsd = repsd()$repsd_each_item,
     responses = timmsData,
     focalColumn = 21
     ) {
@@ -33,7 +36,7 @@ repsd_pval <-
       null_for_item <-
         null_dist[, column] |> unlist()
       null_values <-
-        subset(null_for_item, null_for_item >= repsd_each_item[column]) |> unlist()
+        subset(null_for_item, null_for_item >= items_repsd[column]) |> unlist()
       p <-
         ((length(null_values)) + 1) / ((length(null_for_item)) + 1)
       # p formula based on North et. al. 2002
@@ -46,12 +49,12 @@ repsd_pval <-
     results <-
       data.frame(
         'items' = colnames(responses[, -focalColumn]),
-        'repsd' = repsd_each_item,
+        'repsd' = items_repsd,
         'p-value' = p_for_each_item,
         'sig' = sig_for_each_item
       )
 
-    if (require(colorDF)) {
+    if (requireNamespace('colorDF', quietly = TRUE)) {
       results |>
         colorDF::colorDF(theme = 'wb') |>
         colorDF::highlight('sig' == 1)

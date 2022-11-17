@@ -7,24 +7,27 @@
 repsd_pval(
   alpha = 0.05,
   null_dist = null_repsd(),
-  repsd_each_item = repsd()$repsd_each_item,
+  items_repsd = repsd()$repsd_each_item,
   responses = timmsData,
   focalColumn = 21
 )
 }
 \arguments{
-\item{alpha}{The alpha level to calculate significance.}
+\item{alpha}{numeric. The alpha level to calculate significance.}
 
 \item{null_dist}{A \code{data.frame}-type object with the null distribution simulation for each item as columns.}
 
-\item{repsd_each_item}{A vector of the repsd values for each item.}
+\item{items_repsd}{A numeric vector of the repsd values for each item.}
 
-\item{responses}{The data frame of item responses and the focal column.}
+\item{responses}{The \code{data.frame} of item responses and the focal column.}
 
-\item{focalColumn}{THe column number for the focal column. Removed from the final data.}
+\item{focalColumn}{The column number for the focal column. Removed from the final data.}
 }
 \value{
-If the \code{colorDF} package is installed and accessible, a \code{colorDF} with the significant items highlighted. Otherwise, a \code{data.frame}. Both have columns with the \code{items} names, the \code{repsd} value, the \code{p.value}, and the \code{sig} (0 = false, 1 = true) for each item.
+If the \code{colorDF} package is installed and accessible, a \code{colorDF}
+with the significant items highlighted. Otherwise, a \code{data.frame}. Both have
+columns with the \code{items} names, the \code{repsd} value, the \code{p.value}, and the
+\code{sig} (0 = false, 1 = true) for each item.
 }
 \description{
 Calculating p-values for repsd
@@ -32,8 +35,8 @@ Calculating p-values for repsd
 \details{
 Calculates the p-values for \code{repsd} for the data set.
 It can be used as a wrapper function by providing
-the \code{null_repsd} function and the \code{repsd_each_item}
-output of the \code{repsd} function (each with proper
+the \code{\link[=null_repsd]{null_repsd()}} function and the \code{repsd_each_item}
+output of the \code{\link[=repsd]{repsd()}} function (each with proper
 arguments) as the arguments to \code{null_dist} and
-\code{repsd_each_item}, respectively.
+\code{items_repsd}, respectively.
 }
