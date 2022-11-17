@@ -30,3 +30,15 @@
 #' }
 
 'timmsData'
+
+#' Sample TIMMS item discriminations
+#'
+#' A vector of the 20 item discrimination parameters `a` for the `timmsData` items.
+
+'timmsDiscrim'
+
+#' Sample TIMMS item difficulties
+#'
+#' A vector of the 20 item difficulty parameters `b` for the `timmsData` items.
+
+'timmsDiffic'
