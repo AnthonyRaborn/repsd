@@ -25,7 +25,7 @@ repsd <-
     #   error('focalProp needs to be a numeric value between 0 and 1,')
     # }
     if (!(is.data.frame(responses) | is.matrix(responses))) {
-      warning('responses was not provided as a data.frame or a matrix.\nThe function may fail to provide reasonable results!')
+      stop('responses was not provided as a data.frame or a matrix.\nPlease provide the data in one of these classes.')
     }
     if (!(is.numeric(focalColumn) | is.character(focalColumn))) {
       stop('focalColumn needs to be a numeric or character value.')
@@ -58,7 +58,8 @@ repsd <-
     if (nrow(focalIDTest) == 0) {
       stop('Problems with identifying members of the focal group - no observations found.\nPlease check your provided focalColumn and focalGroupID values and try again.')
     }
-    if (any(!is.numeric(matching), !isTRUE(as.integer(matching) > 2))) {
+    if (any(!is.numeric(matching),
+            !isTRUE(suppressWarnings(as.integer(matching)) > 2))) {
       stop('matching needs to be a numeric value, and that value needs to be an integer greater than 2.\nPlease try again.')
     }
     ###############################################
