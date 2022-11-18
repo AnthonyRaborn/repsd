@@ -8,7 +8,7 @@ null_repsd(
   item_count = 20,
   focal_sample = 88,
   focal_prop = 0.09,
-  impact = -0.417,
+  impact = estimate_impact(),
   item_params_a = timmsDiscrim,
   item_params_b = timmsDiffic,
   iterations = 10000
