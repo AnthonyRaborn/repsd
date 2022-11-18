@@ -1,10 +1,6 @@
 #' repsd
 #'
-#' @param focalSample numeric. How large is the focal sample in the data set?
-#' @param focalProp numeric, between 0 and 1 (exclusive). What is the proportion
-#' of the focal sample compared to the rest of the data?
-#' @param responses data.frame, matrix, or
-#' other object which includes the item
+#' @param responses data.frame, matrix, or similar object which includes the item
 #' responses and the focal group ID column.
 #' @param focalColumn numeric or character. The location or name of the column
 #' that holds the focal group data.
@@ -16,12 +12,69 @@
 #' @export
 
 repsd <-
-  function(focalSample = 88,
-           focalProp = .09,
-           responses = timmsData,
+  function(responses = timmsData,
            focalColumn = 21,
            focalGroupID = 1,
            matching = 4) {
+    ###############################################
+    ########## testing argument values ############
+    # if (!is.numeric(focalSample)) {
+    #   error('focalSample needs to be a numeric value.')
+    # }
+    # if (!is.numeric(focalProp) | focalProp <= 0 | focalProp >= 1) {
+    #   error('focalProp needs to be a numeric value between 0 and 1,')
+    # }
+    if (!(is.data.frame(responses) | is.matrix(responses))) {
+      warning('responses was not provided as a data.frame or a matrix.\nThe function may fail to provide reasonable results!')
+    }
+    if (!(is.numeric(focalColumn) | is.character(focalColumn))) {
+      stop('focalColumn needs to be a numeric or character value.')
+    }
+    focalColumnTest <- tryCatch(
+      expr = {
+        if (is.character(focalColumn)) {
+          focalColumn = which(colnames(responses) == focalColumn)
+        }
+        responses[,focalColumn]
+        responses[,-focalColumn]
+        "Subsetting works."
+      },
+      error = function(e) e
+    )
+    if (any(class(focalColumnTest) == 'error')) {
+      stop('Problems with subsetting the focal column.\nPlease test that your responses data can be subsetting with responses[,focalColumn] and responses[,-focalColumn] (if focalColumn is numeric) or that the correct column name was proved for focalColumn (if focalColumn is character).')
+    }
+    focalIDTest <- tryCatch({
+      if (is.character(focalColumn)) {
+        focalColumn = which(colnames(responses) == focalColumn)
+      }
+      responses[responses[,focalColumn] == focalGroupID, ]
+      },
+      error = function(e) e
+    )
+    if (any(class(focalIDTest) == 'error')) {
+      stop('Problems with the focalGroupID argument - error when attempting to subset the data.\nPlease check your provided focalColumn and focalGroupID values and try again.')
+    }
+    if (nrow(focalIDTest) == 0) {
+      stop('Problems with identifying members of the focal group - no observations found.\nPlease check your provided focalColumn and focalGroupID values and try again.')
+    }
+    if (any(!is.numeric(matching), !isTRUE(as.integer(matching) > 2))) {
+      stop('matching needs to be a numeric value, and that value needs to be an integer greater than 2.\nPlease try again.')
+    }
+    ###############################################
+
+    ###############################################
+    ########### calculated setup values ###########
+    ###############################################
+    focalSample <-
+      nrow(
+        subset(responses,
+               responses[, focalColumn] == focalGroupID)
+      )
+
+    focalProp <-
+      focalSample / nrow(responses)
+
     ###############################################
     ############ calculating repsd ################
     ###############################################
