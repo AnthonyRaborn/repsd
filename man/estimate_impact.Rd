@@ -17,7 +17,7 @@ the focal group.}
 \value{
 A \code{numeric} estimate of the impact as the effect size \emph{D}, e.g., the
 standardized mean theta difference between the focal group and the composite
-(total) group abilities.
+(total) group abilities. This estimate is rounded to 3 decimal places.
 }
 \description{
 Estimate the effect size difference between focal and composite group abilities
