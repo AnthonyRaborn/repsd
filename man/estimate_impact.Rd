@@ -4,7 +4,7 @@
 \alias{estimate_impact}
 \title{Estimate the effect size difference between focal and composite group abilities}
 \usage{
-estimate_impact(responses, focal_column, focal_id)
+estimate_impact(responses = timmsData, focal_column = 21, focal_id = 1)
 }
 \arguments{
 \item{responses}{The \code{data.frame} of responses, including the \code{focal_column}.}

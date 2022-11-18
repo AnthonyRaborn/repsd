@@ -14,9 +14,9 @@
 
 estimate_impact <-
   function(
-    responses,
-    focal_column,
-    focal_id) {
+    responses = timmsData,
+    focal_column = 21,
+    focal_id = 1) {
 
     response_matrix = responses[, -focal_column]
 
