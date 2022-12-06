@@ -12,6 +12,8 @@
 #' @param items_repsd A numeric vector of the repsd values for each item.
 #' @param responses The `data.frame` of item responses and the focal column.
 #' @param focalColumn The column number for the focal column. Removed from the final data.
+#' @param verbose Logical. Do you want to print the results to console (`TRUE`, default)
+#' or return the results invisibly (`FALSE`)?
 #'
 #' @return If the `colorDF` package is installed and accessible, a `colorDF`
 #' with the significant items highlighted. Otherwise, a `data.frame`. Both have
@@ -25,7 +27,8 @@ repsd_pval <-
     null_dist = null_repsd(),
     items_repsd = repsd()$repsd_each_item,
     responses = timmsData,
-    focalColumn = 21
+    focalColumn = 21,
+    verbose = TRUE
     ) {
 
     # p value and sig for each item
@@ -57,13 +60,15 @@ repsd_pval <-
         'sig' = sig_for_each_item
       )
 
-    if (requireNamespace('colorDF', quietly = TRUE)) {
-      results |>
-        colorDF::colorDF(theme = 'wb') |>
-        colorDF::highlight('sig' == 1)
-    } else {
-      results |>
-        print()
+    if (verbose) {
+      if (requireNamespace('colorDF', quietly = TRUE)) {
+        results |>
+          colorDF::colorDF(theme = 'wb') |>
+          colorDF::highlight('sig' == 1)
+      } else {
+        results |>
+          print()
+      }
     }
 
     return(invisible(results))
