@@ -9,6 +9,7 @@
 #' @return A `plot` of the REPSD null distribution for the indicated item with
 #' the observed REPSD value as a red line and the observed p-value
 #' @export
+#' @importFrom graphics abline hist mtext
 #'
 #' @examples
 #' # Not run
@@ -44,12 +45,22 @@
 
 plot_repsd <-
   function(repsd_values, null_values, pvalues, which_item, bins = 30) {
+    if (!is.numeric(repsd_values)) {
+      stop("The respd_values need to be a numeric vector.")
+    }
+    if (!is.matrix(null_values)) {
+      stop("The null_values need to be a matrix where each column represents the null values for a particular item.")
+    }
+    if (!is.numeric(pvalues)) {
+      stop("The pvalues need to be a numeric vector.")
+    }
+
     hist(null_values[,which_item], breaks = bins,
-         main = 'Distribution of Simulated Null REPSD Values',
+         main = 'Distribution of Simulated Null REPSD',
          xlab = 'Null REPSD Values',
          sub = 'Red line indicates observed REPSD value.')
     abline(v = repsd_values[which_item], col = 'red')
-    text_to_write = paste0("p-val:\n", pvalues[which_item] |> round(3))
+    text_to_write = paste0("\np-val:\n", pvalues[which_item] |> round(3))
     mtext(text_to_write, side=3, adj = 1)
     mtext(paste0("For Item Number ", which_item))
   }

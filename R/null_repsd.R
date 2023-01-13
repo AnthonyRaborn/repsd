@@ -28,6 +28,10 @@ null_repsd <- function(item_count = 20,
                        item_params_a = timmsDiscrim,
                        item_params_b = timmsDiffic,
                        iterations = 10000) {
+  if (iterations < 1 | !is.numeric(iterations)) {
+    stop("The iterations needs to be provided as single, numeric value.")
+  }
+
   null_repsd_est <- c()
   pb <- progress::progress_bar$new(total = iterations)
   cat('Beginning repsd Null Distribution Estimation.\n')
