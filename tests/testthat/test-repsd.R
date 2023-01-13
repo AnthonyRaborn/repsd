@@ -40,3 +40,25 @@ test_that('repsd returns errors with improper arguments', {
   )
 })
 
+# Create a test data set
+set.seed(123)
+responses <- data.frame(matrix(rnorm(2000), ncol = 20))
+
+# Test that the function correctly handles the focalColumn argument
+test_that("repsd handles focalColumn argument correctly", {
+  expect_error(repsd(focalColumn = 'not_a_column'))
+  expect_error(repsd(focalColumn = 25))
+})
+
+# Test that the function correctly handles the focalGroupID argument
+test_that("repsd handles focalGroupID argument correctly", {
+  expect_error(repsd(focalGroupID = 'not_a_value'))
+  expect_error(repsd(focalGroupID = 25))
+})
+
+# Test that the function correctly handles the matching argument
+test_that("repsd handles matching argument correctly", {
+  expect_error(repsd(matching = 1))
+  expect_error(repsd(matching = 'not_a_number'))
+})
+
