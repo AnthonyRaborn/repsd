@@ -1,6 +1,6 @@
 ^LICENSE\.md$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-sim
-applied
 to-do.txt
+^sim$
+^applied$
