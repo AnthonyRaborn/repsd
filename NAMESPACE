@@ -2,8 +2,12 @@
 
 export(estimate_impact)
 export(null_repsd)
+export(plot_repsd)
 export(repsd)
 export(repsd_pval)
+importFrom(graphics,abline)
+importFrom(graphics,hist)
+importFrom(graphics,mtext)
 importFrom(progress,progress_bar)
 importFrom(stats,rnorm)
 importFrom(stats,runif)

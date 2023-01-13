@@ -9,7 +9,8 @@ repsd_pval(
   null_dist = null_repsd(),
   items_repsd = repsd()$repsd_each_item,
   responses = timmsData,
-  focalColumn = 21
+  focalColumn = 21,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,9 @@ repsd_pval(
 \item{responses}{The \code{data.frame} of item responses and the focal column.}
 
 \item{focalColumn}{The column number for the focal column. Removed from the final data.}
+
+\item{verbose}{Logical. Do you want to print the results to console (\code{TRUE}, default)
+or return the results invisibly (\code{FALSE})?}
 }
 \value{
 If the \code{colorDF} package is installed and accessible, a \code{colorDF}
