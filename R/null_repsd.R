@@ -4,7 +4,7 @@
 #' @param focal_sample numeric. How large is the focal sample?
 #' @param focal_prop numeric, between 0 and 1 (exclusive). What is the proportion
 #' of the focal sample compared to the rest of the data?
-#' @param matching numeric. How many stratum for matching should be use
+#' @param numStrata numeric. How many strata for matching should be used?
 #' @param impact numeric. What is the expected, standardized mean difference
 #' between the focal group's mean theta and the composite group's mean theta
 #' (i.e., standardized focal mean - composite mean). See details for further explanation.
@@ -25,7 +25,7 @@
 null_repsd <- function(item_count = 20,
                        focal_sample = 88,
                        focal_prop = .09,
-                       matching = 4,
+                       numStrata = 4,
                        impact = estimate_impact(),
                        item_params_a = timmsDiscrim,
                        item_params_b = timmsDiffic,
@@ -44,9 +44,9 @@ null_repsd <- function(item_count = 20,
   if (!is.numeric(focal_prop) | focal_prop <= 0 | focal_prop >= 1) {
     stop("The focal_sample needs to be a numeric value between 0 and 1.")
   }
-  if (any(!is.numeric(matching),
-          !isTRUE(suppressWarnings(as.integer(matching)) > 2))) {
-    stop('matching needs to be a numeric value, and that value needs to be an integer greater than 2.\nPlease try again.')
+  if (any(!is.numeric(numStrata),
+          !isTRUE(suppressWarnings(as.integer(numStrata)) > 2))) {
+    stop('numStrata needs to be a numeric value, and that value needs to be an integer greater than 2.\nPlease try again.')
   }
   if (!is.numeric(impact)) {
     stop('The impact value needs to be a numeric value.')
@@ -113,7 +113,7 @@ null_repsd <- function(item_count = 20,
     stratum_group <-
       cut(
         ttscore,
-        breaks = seq(min(ttscore), max(ttscore), length.out = matching + 1),
+        breaks = seq(min(ttscore), max(ttscore), length.out = numStrata + 1),
         include.lowest = TRUE,
         labels = FALSE
       )

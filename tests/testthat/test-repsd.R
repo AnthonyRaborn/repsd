@@ -33,10 +33,10 @@ test_that('repsd returns errors with improper arguments', {
     repsd(focalGroupID = 'a')
   )
   expect_error(
-    repsd(matching = 0)
+    repsd(numStrata = 0)
   )
   expect_error(
-    repsd(matching = 'a')
+    repsd(numStrata = 'a')
   )
 })
 
@@ -56,9 +56,9 @@ test_that("repsd handles focalGroupID argument correctly", {
   expect_error(repsd(focalGroupID = 25))
 })
 
-# Test that the function correctly handles the matching argument
-test_that("repsd handles matching argument correctly", {
-  expect_error(repsd(matching = 1))
-  expect_error(repsd(matching = 'not_a_number'))
+# Test that the function correctly handles the numStrata argument
+test_that("repsd handles numStrata argument correctly", {
+  expect_error(repsd(numStrata = 1))
+  expect_error(repsd(numStrata = 'not_a_number'))
 })
 

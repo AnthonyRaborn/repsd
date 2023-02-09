@@ -4,7 +4,7 @@
 \alias{repsd}
 \title{repsd}
 \usage{
-repsd(responses = timmsData, focalColumn = 21, focalGroupID = 1, matching = 4)
+repsd(responses = timmsData, focalColumn = 21, focalGroupID = 1, numStrata = 4)
 }
 \arguments{
 \item{responses}{data.frame, matrix, or similar object which includes the item
@@ -16,7 +16,7 @@ that holds the focal group data.}
 \item{focalGroupID}{numeric or character. The value that identifies the focal
 group.}
 
-\item{matching}{numeric. How many stratum for matching should be use}
+\item{numStrata}{numeric. How many strata for matching should be used?}
 }
 \value{
 Matrix of repsd values for each item.
