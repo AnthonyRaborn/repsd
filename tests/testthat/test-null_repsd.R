@@ -19,6 +19,16 @@ test_that("null_repsd handles focal_prop argument correctly", {
   expect_error(null_repsd(focal_prop = 'not_a_number'))
 })
 
+# Test that the function correctly handles the matching argument
+test_that('null_repsd handles matching argument correctly', {
+  expect_error(
+    null_repsd(matching = 0)
+  )
+  expect_error(
+    null_repsd(matching = 'a')
+  )
+})
+
 # Test that the function correctly handles the impact argument
 test_that("null_repsd handles impact argument correctly", {
   expect_error(null_repsd(impact = 'not_a_number'))

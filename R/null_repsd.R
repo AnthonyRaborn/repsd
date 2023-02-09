@@ -4,6 +4,7 @@
 #' @param focal_sample numeric. How large is the focal sample?
 #' @param focal_prop numeric, between 0 and 1 (exclusive). What is the proportion
 #' of the focal sample compared to the rest of the data?
+#' @param matching numeric. How many stratum for matching should be use
 #' @param impact numeric. What is the expected, standardized mean difference
 #' between the focal group's mean theta and the composite group's mean theta
 #' (i.e., standardized focal mean - composite mean). See details for further explanation.
@@ -24,12 +25,41 @@
 null_repsd <- function(item_count = 20,
                        focal_sample = 88,
                        focal_prop = .09,
+                       matching = 4,
                        impact = estimate_impact(),
                        item_params_a = timmsDiscrim,
                        item_params_b = timmsDiffic,
                        iterations = 10000) {
+  ###############################################
+  ########## testing argument values ############
   if (iterations < 1 | !is.numeric(iterations)) {
     stop("The iterations needs to be provided as single, numeric value.")
+  }
+  if (!is.numeric(item_count) | item_count < 1) {
+    stop("The item_count needs to be a numeric, integer value greater than 0.")
+  }
+  if (!is.numeric(focal_sample) | focal_sample < 1) {
+    stop("The focal_sample needs to be a numeric, integer value greater than 0.")
+  }
+  if (!is.numeric(focal_prop) | focal_prop <= 0 | focal_prop >= 1) {
+    stop("The focal_sample needs to be a numeric value between 0 and 1.")
+  }
+  if (any(!is.numeric(matching),
+          !isTRUE(suppressWarnings(as.integer(matching)) > 2))) {
+    stop('matching needs to be a numeric value, and that value needs to be an integer greater than 2.\nPlease try again.')
+  }
+  if (!is.numeric(impact)) {
+    stop('The impact value needs to be a numeric value.')
+  }
+  if (length(item_params_a) != item_count) {
+    stop('The provided number of item_params_a does not equal the provided item_count.')
+  }
+  if (length(item_params_b) != item_count) {
+    stop('The provided number of item_params_b does not equal the provided item_count.')
+  }
+  if (!is.numeric(iterations) | iterations < 1) {
+    warning('The specified iterations value was incorrect. Setting to the default value of 10,000.')
+    iterations = 10000
   }
 
   null_repsd_est <- c()
@@ -83,7 +113,7 @@ null_repsd <- function(item_count = 20,
     stratum_group <-
       cut(
         ttscore,
-        breaks = seq(min(ttscore), max(ttscore), length.out = 5),
+        breaks = seq(min(ttscore), max(ttscore), length.out = matching + 1),
         include.lowest = TRUE,
         labels = FALSE
       )

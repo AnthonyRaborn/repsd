@@ -8,6 +8,7 @@ null_repsd(
   item_count = 20,
   focal_sample = 88,
   focal_prop = 0.09,
+  matching = 4,
   impact = estimate_impact(),
   item_params_a = timmsDiscrim,
   item_params_b = timmsDiffic,
@@ -21,6 +22,8 @@ null_repsd(
 
 \item{focal_prop}{numeric, between 0 and 1 (exclusive). What is the proportion
 of the focal sample compared to the rest of the data?}
+
+\item{matching}{numeric. How many stratum for matching should be use}
 
 \item{impact}{numeric. What is the expected, standardized mean difference
 between the focal group's mean theta and the composite group's mean theta
