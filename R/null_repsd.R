@@ -67,6 +67,9 @@ null_repsd <- function(item_count = 20,
     warning('The specified iterations value was incorrect. Setting to the default value of 10,000.')
     iterations = 10000
   }
+  if (numStrata > item_count) {
+    stop('The number of strata cannot be greater than the item_count')
+  }
 
   null_repsd_est <- c()
   pb <- progress::progress_bar$new(total = iterations)
@@ -138,19 +141,15 @@ null_repsd <- function(item_count = 20,
     ## getting new focal sample size , after removing strata with less than 10
     data_helping <- subset(data, data[, (item_count + 1)] == 1)
     stratum_group_temp <- data_helping[, item_count + 2]
-    ns1 <- table(stratum_group_temp)[1]
-    ns2 <- table(stratum_group_temp)[2]
-    ns3 <- table(stratum_group_temp)[3]
-    ns4 <- table(stratum_group_temp)[4]
-    ns <- c(ns1, ns2, ns3, ns4)
+    ns <- table(stratum_group_temp)
 
     flags <- c()
-    for (z in 1:4) {
+    for (z in 1:numStrata) {
       flag <- ifelse(ns[z] < 10, ns[z], 0)
       flags <- c(flags, flag)
     }
 
-    total_removed <- sum(flags)
+    total_removed <- sum(flags, na.rm = TRUE)
     focal_sample_used <- focal_sample - total_removed
 
 
@@ -165,12 +164,12 @@ null_repsd <- function(item_count = 20,
         sub_data_foc <-
           subset(sub_data, sub_data[, (item_count + 1)] == 1)
 
-        if (length(sub_data_foc[, items_again] < 10)) {
+        if (length(sub_data_foc[, items_again]) < 10) {
           # ignoring strata with less than 10 focal examinees
           brackets <- brackets
         }
 
-        if (length(sub_data_foc[, items_again] >= 10)) {
+        if (length(sub_data_foc[, items_again]) >= 10) {
           # using only strata with 10 or more focal examinees
 
           psg <- mean(sub_data_foc[, items_again])
