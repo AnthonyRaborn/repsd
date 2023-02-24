@@ -12,7 +12,12 @@
 #' of the items in the data set?
 #' @param item_params_b numeric vector. What are the difficulty parameters of
 #' the items in the data set?
+#' @param anchorItems either `NULL` or a vector of the anchorItems names or
+#' numeric column locations. If `NULL`, all items are used for calculating the
+#' total test score for stratifying individuals. If a vector, the specified items
+#' are used to calculate the total test score for stratifying individuals.
 #' @param iterations numeric. How many iterations for the function to run?
+#' Defaults to 10000.
 #'
 #' @return An `item_count` x `iterations` data.frame with simulated repsd values
 #'  for each item.
@@ -29,6 +34,7 @@ null_repsd <- function(item_count = 20,
                        impact = estimate_impact(),
                        item_params_a = timmsDiscrim,
                        item_params_b = timmsDiffic,
+                       anchorItems = NULL,
                        iterations = 10000) {
   ###############################################
   ########## testing argument values ############
@@ -108,7 +114,12 @@ null_repsd <- function(item_count = 20,
         totalss - focal_sample
       ))))
 
-    ttscore <- rowSums(data[, 1:item_count])
+    ttscore <-
+      if (is.null(anchorItems)) {
+        rowSums(data[, 1:item_count])
+      } else {
+        rowSums(data[, anchorItems])
+      }
 
     stratum_group <-
       cut(

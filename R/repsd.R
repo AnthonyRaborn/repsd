@@ -6,6 +6,10 @@
 #' that holds the focal group data.
 #' @param focalGroupID numeric or character. The value that identifies the focal
 #' group.
+#' @param anchorItems either `NULL` or a vector of the anchorItems names or
+#' numeric column locations. If `NULL`, all items are used for calculating the
+#' total test score for stratifying individuals. If a vector, the specified items
+#' are used to calculate the total test score for stratifying individuals.
 #' @param numStrata numeric. How many strata for matching should be used?
 #'
 #' @return Matrix of repsd values for each item.
@@ -15,6 +19,7 @@ repsd <-
   function(responses = timmsData,
            focalColumn = 21,
            focalGroupID = 1,
+           anchorItems = NULL,
            numStrata = 4) {
     ###############################################
     ########## testing argument values ############
@@ -58,6 +63,25 @@ repsd <-
     if (nrow(focalIDTest) == 0) {
       stop('Problems with identifying members of the focal group - no observations found.\nPlease check your provided focalColumn and focalGroupID values and try again.')
     }
+    if (!is.null(anchorItems)) {
+      if (is.numeric(anchorItems)) {
+        numericAnchorItems <- tryCatch({
+          ttscore_foc_test = rowSums(responses[,anchorItems])
+        },
+        error = function(e) e)
+        if (any(class(numericAnchorItems) == 'error')) {
+          stop('Problems with specifying the anchorItems. Please check that the numeric vector of values provided only includes the column location of the items you wish to use for creating the total test score and try again.')
+        }
+      } else if (is.character(anchorItems)) {
+        characterAnchorItems <- tryCatch({
+          ttscore_foc_test = rowSums(responses[,anchorItems])
+        },
+        error = function(e) e)
+        if (any(class(characterAnchorItems) == 'error')) {
+          stop('Problems with specifying the anchorItems. Please check that the character vector of values provided only includes the column names of the items you wish to use for creating the total test score and try again.')
+        }
+      }
+    }
     if (any(!is.numeric(numStrata),
             !isTRUE(suppressWarnings(as.integer(numStrata)) > 2))) {
       stop('numStrata needs to be a numeric value, and that value needs to be an integer greater than 2.\nPlease try again.')
@@ -85,9 +109,17 @@ repsd <-
       subset(responses,
              responses[, focalColumn] == focalGroupID)
     ttscore_foc <-
-      rowSums(itemresp_foc[,-focalColumn])  # I am cutting the strata based on total score of focal group only!
+      if (is.null(anchorItems)) {
+        rowSums(itemresp_foc[,-focalColumn])  # I am cutting the strata based on total score of focal group only!
+      } else {
+        rowSums(itemresp_foc[,anchorItems])
+      }
     ttscore <-
-      rowSums(responses[,-focalColumn])
+      if (is.null(anchorItems)) {
+        rowSums(responses[,-focalColumn])
+      } else {
+        rowSums(responses[,anchorItems])
+      }
 
     breaks_foc <-
       seq(min(ttscore_foc),
