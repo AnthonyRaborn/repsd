@@ -12,6 +12,7 @@ null_repsd(
   impact = estimate_impact(),
   item_params_a = timmsDiscrim,
   item_params_b = timmsDiffic,
+  anchorItems = NULL,
   iterations = 10000
 )
 }
@@ -35,7 +36,13 @@ of the items in the data set?}
 \item{item_params_b}{numeric vector. What are the difficulty parameters of
 the items in the data set?}
 
-\item{iterations}{numeric. How many iterations for the function to run?}
+\item{anchorItems}{either \code{NULL} or a vector of the anchorItems names or
+numeric column locations. If \code{NULL}, all items are used for calculating the
+total test score for stratifying individuals. If a vector, the specified items
+are used to calculate the total test score for stratifying individuals.}
+
+\item{iterations}{numeric. How many iterations for the function to run?
+Defaults to 10000.}
 }
 \value{
 An \code{item_count} x \code{iterations} data.frame with simulated repsd values

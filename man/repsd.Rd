@@ -4,7 +4,13 @@
 \alias{repsd}
 \title{repsd}
 \usage{
-repsd(responses = timmsData, focalColumn = 21, focalGroupID = 1, numStrata = 4)
+repsd(
+  responses = timmsData,
+  focalColumn = 21,
+  focalGroupID = 1,
+  anchorItems = NULL,
+  numStrata = 4
+)
 }
 \arguments{
 \item{responses}{data.frame, matrix, or similar object which includes the item
@@ -15,6 +21,11 @@ that holds the focal group data.}
 
 \item{focalGroupID}{numeric or character. The value that identifies the focal
 group.}
+
+\item{anchorItems}{either \code{NULL} or a vector of the anchorItems names or
+numeric column locations. If \code{NULL}, all items are used for calculating the
+total test score for stratifying individuals. If a vector, the specified items
+are used to calculate the total test score for stratifying individuals.}
 
 \item{numStrata}{numeric. How many strata for matching should be used?}
 }
