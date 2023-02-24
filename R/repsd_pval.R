@@ -52,9 +52,11 @@ repsd_pval <-
     results <-
       data.frame(
         'items' =
-          ifelse(is.null(colnames(responses[, -focalColumn])),
-                 paste0("Item ", 1:(ncol(responses) - 1)),
-                 colnames(responses[, -focalColumn])),
+          if (is.null(colnames(responses[, -focalColumn]))) {
+            paste0("Item ", 1:(ncol(responses) - 1))
+          } else{
+            colnames(responses[, -focalColumn])
+          },
         'repsd' = items_repsd,
         'p-value' = p_for_each_item,
         'sig' = sig_for_each_item
