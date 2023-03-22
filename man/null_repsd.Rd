@@ -13,7 +13,8 @@ null_repsd(
   item_params_a = timmsDiscrim,
   item_params_b = timmsDiffic,
   anchorItems = NULL,
-  iterations = 10000
+  iterations = 10000,
+  verbose = TRUE
 )
 }
 \arguments{
@@ -43,6 +44,9 @@ are used to calculate the total test score for stratifying individuals.}
 
 \item{iterations}{numeric. How many iterations for the function to run?
 Defaults to 10000.}
+
+\item{verbose}{logical. If \code{TRUE} (default), prints a \code{progress::progress_bar()}
+in the console to allow tracking of the state of the distribution generation.}
 }
 \value{
 An \code{item_count} x \code{iterations} data.frame with simulated repsd values

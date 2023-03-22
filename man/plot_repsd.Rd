@@ -25,12 +25,10 @@ the observed REPSD value as a red line and the observed p-value
 REPSD Null vs Observed Histogram
 }
 \examples{
-# Not run
-\dontrun{
 example_repsd <-
     repsd()
 example_null <-
-    null_repsd()
+    null_repsd(iterations = 100)
 example_pvals <-
     repsd_pval(
                alpha = .05,
@@ -42,17 +40,18 @@ plot_repsd(repsd_values = example_repsd$repsd_each_item,
            null_values = example_null,
            pvalues = example_pvals$p.value,
            which_item = 18,
-           bins = 50)
+           bins = 10)
 # Multiple plots on the same plot
-par(mfrow=c(2,2))
+oldpar <- par()
+par(mfrow = c(2,2))
 for (i in c(1,8,16,18)) {
   plot_repsd(
              repsd_values = example_repsd$repsd_each_item,
              null_values = example_null,
              pvalues = example_pvals$p.value,
              which_item = 18,
-             bins = 50
+             bins = 10
              )
-  }
 }
+par(mfrow = oldpar$mfrow)
 }

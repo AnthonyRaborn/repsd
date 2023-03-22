@@ -18,6 +18,8 @@
 #' are used to calculate the total test score for stratifying individuals.
 #' @param iterations numeric. How many iterations for the function to run?
 #' Defaults to 10000.
+#' @param verbose logical. If `TRUE` (default), prints a `progress::progress_bar()`
+#' in the console to allow tracking of the state of the distribution generation.
 #'
 #' @return An `item_count` x `iterations` data.frame with simulated repsd values
 #'  for each item.
@@ -35,7 +37,8 @@ null_repsd <- function(item_count = 20,
                        item_params_a = timmsDiscrim,
                        item_params_b = timmsDiffic,
                        anchorItems = NULL,
-                       iterations = 10000) {
+                       iterations = 10000,
+                       verbose = TRUE) {
   ###############################################
   ########## testing argument values ############
   if (iterations < 1 | !is.numeric(iterations)) {
@@ -72,11 +75,13 @@ null_repsd <- function(item_count = 20,
   }
 
   null_repsd_est <- c()
-  pb <- progress::progress_bar$new(total = iterations)
-  cat('Beginning repsd Null Distribution Estimation.\n')
+  if (verbose) {
+    pb <- progress::progress_bar$new(total = iterations)
+  }
+  message('Beginning repsd Null Distribution Estimation.\n')
 
   for (i in 1:iterations) {
-    pb$tick()
+    if (verbose) pb$tick()
     totalss <- focal_sample / focal_prop
     thetafoc <- stats::rnorm(focal_sample, impact, 1)
     nonfocss <-
@@ -188,5 +193,5 @@ null_repsd <- function(item_count = 20,
     null_repsd_est <- rbind(null_repsd_est, repsd_each_item)
 
   }
-  null_repsd_est
+  return(null_repsd_est)
 }
