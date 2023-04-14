@@ -1,6 +1,6 @@
 Package: repsd
 Title: Root Expected Proportion Squared Difference for Detecting DIF
-Version: 1.0.0
+Version: 1.0.1
 Authors@R: c(
   person(given = c("Anne", "Corrine"), family = "Huggins-Manley",
     email = "amanley@coe.ufl.edu", role = c("aut")),
